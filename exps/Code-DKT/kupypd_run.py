@@ -110,10 +110,6 @@ if __name__ == '__main__':
 
         hp_comb_list_or_dict = make_hp_combs(hp_scopes)
 
-        for hp_comb in hp_comb_list_or_dict:
-            if hp_comb["emb_size"] == 300:
-                hp_comb["batch_size"] = 16
-
         logger.info("starting to search best hyper parameters")
     else:
         dataset_hp_fname = "semester_group_best_hp"
