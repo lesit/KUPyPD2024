@@ -104,7 +104,7 @@ if __name__ == '__main__':
         dataset_hp_path = None  # search for all
 
         hp_scopes = {
-            "emb_size": [50, 100, 150, 300],
+            "emb_size": [50, 100, 150],
             "lr": [0.0005, 0.001, 0.005],
         }
 
