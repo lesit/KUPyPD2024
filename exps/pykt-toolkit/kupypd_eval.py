@@ -178,7 +178,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--devices", default="0,1", help="gpu devices")
     parser.add_argument("--mp_per_gpu", default=2, type=int, help="multi processes per a gpu")
-    parser.add_argument("--_inc_accepted_reattempt", action="store_true")
+    parser.add_argument("--inc_accepted_reattempt", action="store_true")
     parser.add_argument("--train_saved_dir", type=str, default="kupypd_result/train")
     parser.add_argument("--result_dir", type=str, default="kupypd_result")
     parser.add_argument("--log_dir", type=str, default="kupypd_log")
@@ -187,7 +187,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     train_saved_dir = args.train_saved_dir
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         train_saved_dir += "_inc_accepted_reattempt"
     train_saved_folder = os.path.split(train_saved_dir)[-1]
 
@@ -202,7 +202,7 @@ if __name__ == "__main__":
     logger.info(f"args:\n{arg_params}")
 
     eval_save_dir = os.path.join(args.result_dir, kupypd_eval_folder)
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         eval_save_dir += "_inc_accepted_reattempt"
    
     eval_info_list = []

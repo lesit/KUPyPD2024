@@ -89,7 +89,7 @@ def attempt_preprocess(main_df, save_dir, logger):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset_root_dir", default="../../../dataset")
-    parser.add_argument("--_inc_accepted_reattempt", action="store_true")
+    parser.add_argument("--inc_accepted_reattempt", action="store_true")
     parser.add_argument("--result_dir", default="kupypd_data")
     parser.add_argument("--semester_group", default=None)
     parser.add_argument("--debug", action="store_true")
@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
     import datetime
     logger_name = f"preprocess"
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         logger_name += "_inc_accepted_reattempt"
     logger_name += "_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S.%f")
     if args.debug:
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     config = Config()
 
     save_root_dir = args.result_dir
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         save_root_dir += "_inc_accepted_reattempt"
 
     if os.path.isdir(save_root_dir):
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     submission_path = get_dataset_path(dataset_root_dir, DatasetType.submission_interaction)
     main_df = pd.read_csv(submission_path)
     logger.info(f"main_df.shape:{main_df.shape}")
-    if not args._inc_accepted_reattempt:
+    if not args.inc_accepted_reattempt:
         import src.make_drop_accepted_reattemt as make_drop_accepted_reattemt
         main_df = make_drop_accepted_reattemt.drop(main_df, os.path.join("re_attempt_status.csv"), logger)
         logger.info(f"main_df.shape:{main_df.shape}")

@@ -107,7 +107,7 @@ if __name__ == "__main__":
     parser.add_argument("-m","--min_seq_len", type=int, default=8)  # at least 8 week. 1 more problem per week.
     parser.add_argument("-l","--maxlen", type=int, default=200)
     parser.add_argument("-k","--kfold", type=int, default=5)
-    parser.add_argument("--_inc_accepted_reattempt", action="store_true")
+    parser.add_argument("--inc_accepted_reattempt", action="store_true")
 
     # parser.add_argument("--mode", type=str, default="concept",help="question or concept")
     args = parser.parse_args()
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     dataset_root_dir = args.dataset_dir
 
     save_data_root_dir = args.save_dir
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         save_data_root_dir += "_inc_accepted_reattempt"
 
     logger = make_logger.make("kupypd_preprocess", save_dir=os.path.join(args.log_dir, "preprocess"))
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     submissions_path = get_dataset_path(dataset_root_dir, DatasetType.submission_interaction)
     total_submissions_df = pd.read_csv(submissions_path)
     logger.info(f"total_submissions_df: {total_submissions_df.shape}")
-    if not args._inc_accepted_reattempt:
+    if not args.inc_accepted_reattempt:
         drop_accepted_reattempt_dir = "drop_accepted_reattempt"
         import src.make_drop_accepted_reattemt as make_drop_accepted_reattemt
         total_submissions_df = make_drop_accepted_reattemt.drop(total_submissions_df, os.path.join("re_attempt_status.csv"), logger)
@@ -157,7 +157,7 @@ if __name__ == "__main__":
         os.system("rm " + data_save_dir + "/*.pkl")
 
         dataset_name = semester_group
-        if args._inc_accepted_reattempt:
+        if args.inc_accepted_reattempt:
             dataset_name += "_inc_accepted_reattempt"
 
         #for concept level model

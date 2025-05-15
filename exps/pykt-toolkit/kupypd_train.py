@@ -298,7 +298,7 @@ if __name__ == "__main__":
     parser.add_argument("--model_param_jsons_fname", type=str, default=None)
     parser.add_argument("--dataset_names", type=str, default="20241_0,20241_1,20241_2,20241_3,20242_0")
     parser.add_argument("--hp_tunes", type=str, default=None)
-    parser.add_argument("--_inc_accepted_reattempt", action="store_true")
+    parser.add_argument("--inc_accepted_reattempt", action="store_true")
     parser.add_argument("--result_dir", type=str, default="kupypd_result")
     parser.add_argument("--log_dir", type=str, default="kupypd_log")
     parser.add_argument("--debug", action="store_true")
@@ -328,13 +328,13 @@ if __name__ == "__main__":
             return os.path.join(save_root_dir, kupypd_train_folder)
 
     train_save_dir = get_save_dir(args.result_dir, hp_search_comb_list is not None)
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         train_save_dir += "_inc_accepted_reattempt"
 
     logger_dir = get_save_dir(args.log_dir, hp_search_comb_list is not None)
 
     logger_name = f"kupypd_train-mp_{model_param_jsons_fname}-device_{args.devices}"
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         logger_name += "_inc_accepted_reattempt"
     if hp_search_comb_list is not None:
         logger_name += f"-hp_{args.hp_tunes}"
@@ -347,7 +347,7 @@ if __name__ == "__main__":
     logger.info(f"args:\n{arg_params}")
 
     dataset_names = [dataset_name for dataset_name in args.dataset_names.split(",")]
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         dataset_names = [dataset_name+"_inc_accepted_reattempt" for dataset_name in dataset_names]
 
     with open(os.path.join("pykt", "config", "que_type_models.json"), "r") as f:
@@ -388,7 +388,7 @@ if __name__ == "__main__":
             dataset_total_model_params_dict[dataset_name] = total_model_params_dict
     else:
         hp_search_save_dir = get_save_dir(args.result_dir, True)
-        if args._inc_accepted_reattempt:
+        if args.inc_accepted_reattempt:
             hp_search_save_dir += "_inc_accepted_reattempt"
         for dataset_name in dataset_names:
             dataset_model_params_dir = os.path.join(hp_search_save_dir, dataset_name)
@@ -474,7 +474,7 @@ if __name__ == "__main__":
         check_best_hp_results(total_model_params_dict, train_save_dir)
 
         copy_to_dir = get_save_dir(args.result_dir, is_hp_search = False)
-        if args._inc_accepted_reattempt:
+        if args.inc_accepted_reattempt:
             copy_to_dir += "_inc_accepted_reattempt"
         copy_hp_search_train_results(train_save_dir, copy_to_dir)
 

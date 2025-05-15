@@ -99,7 +99,7 @@ if __name__ == "__main__":
 
     import datetime
     logger_name = f"preprocess_emb_{args.emb_model}-devices_{args.devices}"
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         logger_name += "_inc_accepted_reattempt"
     logger_name += "_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S.%f")
     if args.debug:
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     config = Config()
 
     save_root_dir = os.path.join(args.result_dir, f"{args.emb_model}")
-    if args._inc_accepted_reattempt:
+    if args.inc_accepted_reattempt:
         save_root_dir += "_inc_accepted_reattempt"
 
     if os.path.isdir(save_root_dir):
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     submission_path = get_dataset_path(dataset_root_dir, DatasetType.submission_interaction)
     main_df = pd.read_csv(submission_path)
     logger.info(f"main_df.shape:{main_df.shape}")
-    if not args._inc_accepted_reattempt:
+    if not args.inc_accepted_reattempt:
         import src.make_drop_accepted_reattemt as make_drop_accepted_reattemt
         main_df = make_drop_accepted_reattemt.drop(main_df, os.path.join(save_root_dir, "re_attempt_status.csv"), logger)
         logger.info(f"main_df.shape:{main_df.shape}")
